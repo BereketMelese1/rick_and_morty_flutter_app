@@ -14,8 +14,8 @@ class DetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(31, 33, 31, 31),
-        title: Text(
+        backgroundColor: const  Color.fromARGB(31, 33, 31, 31),
+        title: const  Text(
           'Personal Info',
         ),
         centerTitle: true,
@@ -34,10 +34,11 @@ class DetailScreen extends StatelessWidget {
             }
 
             if (result.isLoading) {
-              return Center(
-                child: SpinKitDoubleBounce(
-                color: Colors.blue,
-                size: 50.0,
+              return const Center(
+                child: 
+                SpinKitDoubleBounce(
+                      color: Colors.blue,
+                      size: 50.0,
         ),);
             }
 
@@ -51,11 +52,11 @@ class DetailScreen extends StatelessWidget {
               padding: EdgeInsets.all(32.0),
               children: [
                 _CharacterHeader(character),
-                SizedBox(height: 32.0),
+                const   SizedBox(height: 32.0),
                 _CharacterInfo(character),
-                Divider(color: Colors.green),
+               const  Divider(color: Colors.green),
                 _CharacterLocation(character),
-                Divider(color: Colors.green),
+              const   Divider(color: Colors.green),
                 _CharacterEpisode(character),
               ],
             );
@@ -89,10 +90,10 @@ class DetailScreen extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 32.0),
+         const  SizedBox(height: 32.0),
           Text(
             character['name'],
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.bold,
             ),
@@ -106,18 +107,18 @@ class DetailScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(height: 8.0),
+        const SizedBox(height: 8.0),
         _buildInfoRow(Icons.person, Colors.green, character['status'],
             character['status'] == 'Alive' ? Colors.green : Colors.red),
-        SizedBox(height: 8.0),
+        const SizedBox(height: 8.0),
         _buildInfoRow(
             Icons.person_2_outlined, Colors.orange, character['species']),
-        SizedBox(height: 8.0),
+        const SizedBox(height: 8.0),
         if (character['type'].isNotEmpty)
           _buildInfoRow(Icons.category, Colors.purple, character['type']),
-        SizedBox(height: 8.0),
+        const SizedBox(height: 8.0),
         _buildInfoRow(Icons.transgender, Colors.pink, character['gender']),
-        SizedBox(height: 16.0),
+        const SizedBox(height: 16.0),
       ],
     );
   }
@@ -125,7 +126,7 @@ class DetailScreen extends StatelessWidget {
   Widget _CharacterLocation(Map<String, dynamic> character) {
     return Column(
       children: [
-        Text(
+        const Text(
           'Locations:',
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
