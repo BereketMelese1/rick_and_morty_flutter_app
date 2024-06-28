@@ -25,6 +25,7 @@ class DetailScreen extends StatelessWidget {
           options: QueryOptions(
             document: gql(getCharacterQuery),
             variables: {'id': id},
+            fetchPolicy: FetchPolicy.cacheFirst,
           ),
           builder: (QueryResult result,
               {VoidCallback? refetch, FetchMore? fetchMore}) {
