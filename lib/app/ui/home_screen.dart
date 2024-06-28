@@ -5,7 +5,6 @@ import 'package:rick_and_morty/app/utils/query.dart';
 import 'package:rick_and_morty/app/widgets/character_widget.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -20,9 +19,21 @@ class _HomeScreenState extends State<HomeScreen> {
   String _selectedStatus = "All";
   String _selectedSpecies = "All";
 
-  final List<String> _genders = ["All", "Male", "Female", "Genderless", "unknown"];
+  final List<String> _genders = [
+    "All",
+    "Male",
+    "Female",
+    "Genderless",
+    "unknown"
+  ];
   final List<String> _statuses = ["All", "Alive", "Dead", "unknown"];
-  final List<String> _species = ["All", "Human", "Alien", "Humanoid", "unknown"]; // Add more species as needed
+  final List<String> _species = [
+    "All",
+    "Human",
+    "Alien",
+    "Humanoid",
+    "unknown"
+  ]; // Add more species as needed
 
   @override
   void initState() {
@@ -44,23 +55,28 @@ class _HomeScreenState extends State<HomeScreen> {
     List<Character> filteredCharacters = characters;
 
     if (_searchQuery.isNotEmpty) {
-      filteredCharacters = filteredCharacters.where((character) =>
-          character.name.toLowerCase().contains(_searchQuery.toLowerCase())).toList();
+      filteredCharacters = filteredCharacters
+          .where((character) =>
+              character.name.toLowerCase().contains(_searchQuery.toLowerCase()))
+          .toList();
     }
 
     if (_selectedGender != "All") {
-      filteredCharacters = filteredCharacters.where((character) =>
-          character.gender == _selectedGender).toList();
+      filteredCharacters = filteredCharacters
+          .where((character) => character.gender == _selectedGender)
+          .toList();
     }
 
     if (_selectedStatus != "All") {
-      filteredCharacters = filteredCharacters.where((character) =>
-          character.status == _selectedStatus).toList();
+      filteredCharacters = filteredCharacters
+          .where((character) => character.status == _selectedStatus)
+          .toList();
     }
 
     if (_selectedSpecies != "All") {
-      filteredCharacters = filteredCharacters.where((character) =>
-          character.species == _selectedSpecies).toList();
+      filteredCharacters = filteredCharacters
+          .where((character) => character.species == _selectedSpecies)
+          .toList();
     }
 
     return filteredCharacters;
@@ -73,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(31, 125, 239, 68),
+        backgroundColor: Color.fromARGB(234, 14, 33, 59),
         title: Row(
           children: [
             SizedBox(
@@ -112,8 +128,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   filled: true,
-                  fillColor: Color.fromARGB(255, 219, 246, 208),
-                  prefixIcon: Icon(Icons.search, color: Colors.grey,),
+                  fillColor: Color.fromARGB(255, 29, 40, 74),
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: Colors.grey,
+                  ),
                   suffixIcon: IconButton(
                     icon: Icon(Icons.clear, color: Colors.grey),
                     onPressed: () {
@@ -121,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                   ),
                 ),
-                style: TextStyle(color: Colors.black),
+                style: TextStyle(color: Colors.white),
               ),
             ),
           ],
@@ -187,7 +206,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ? SpinKitDoubleBounce(
                                       color: Colors.blue,
                                       size: 50.0,
-                                        )
+                                    )
                                   : const Text("Load More"))
                       ],
                     ),
@@ -219,7 +238,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Color.fromARGB(31, 125, 239, 68),
+        color: Color.fromARGB(234, 14, 33, 59),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Wrap(
@@ -229,13 +248,14 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Column(
                 children: [
-                  Text("Gender"),
+                  Text("Gender", style: TextStyle(color: Colors.white)),
                   DropdownButton<String>(
                     value: _selectedGender,
+                    dropdownColor: Color.fromARGB(255, 29, 40, 74),
                     items: _genders.map((String gender) {
                       return DropdownMenuItem<String>(
                         value: gender,
-                        child: Text(gender),
+                        child: Text(gender, style: TextStyle(color: Colors.white)),
                       );
                     }).toList(),
                     onChanged: (String? newValue) {
@@ -248,13 +268,14 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Column(
                 children: [
-                  Text("Status"),
+                  Text("Status", style: TextStyle(color: Colors.white)),
                   DropdownButton<String>(
                     value: _selectedStatus,
+                    dropdownColor: Color.fromARGB(255, 29, 40, 74),
                     items: _statuses.map((String status) {
                       return DropdownMenuItem<String>(
                         value: status,
-                        child: Text(status),
+                        child: Text(status, style: TextStyle(color: Colors.white)),
                       );
                     }).toList(),
                     onChanged: (String? newValue) {
@@ -267,13 +288,14 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Column(
                 children: [
-                  Text("Species"),
+                  Text("Species", style: TextStyle(color: Colors.white)),
                   DropdownButton<String>(
                     value: _selectedSpecies,
+                    dropdownColor: Color.fromARGB(255, 29, 40, 74),
                     items: _species.map((String species) {
                       return DropdownMenuItem<String>(
                         value: species,
-                        child: Text(species),
+                        child: Text(species, style: TextStyle(color: Colors.white)),
                       );
                     }).toList(),
                     onChanged: (String? newValue) {

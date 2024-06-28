@@ -14,13 +14,15 @@ class DetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const  Color.fromARGB(31, 33, 31, 31),
+        backgroundColor: const Color.fromARGB(234, 14, 33, 59),
         title: const  Text(
           'Personal Info',
+          style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
       ),
       body: Center(
+        
         child: Query(
           options: QueryOptions(
             document: gql(getCharacterQuery),
