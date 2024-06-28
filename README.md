@@ -4,6 +4,8 @@
 
 This is a Flutter application that uses the [Rick and Morty GraphQL API](https://github.com/afuh/rick-and-morty-api) to display characters from the popular animated TV series.
 
+It can also support my rick_and_morty movie website i had already developed("https://rick-and-morty-movie-website.netlify.app")
+
 ## Features
 
 - Fetch and display a list of characters from the Rick and Morty universe
