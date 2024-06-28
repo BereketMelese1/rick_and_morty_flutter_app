@@ -3,6 +3,8 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:rick_and_morty/app/model/character.dart';
 import 'package:rick_and_morty/app/utils/query.dart';
 import 'package:rick_and_morty/app/widgets/character_widget.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -182,7 +184,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 await fetchMore!(opts);
                               },
                               child: result.isLoading
-                                  ? CircularProgressIndicator()
+                                  ? SpinKitDoubleBounce(
+                                      color: Colors.blue,
+                                      size: 50.0,
+                                        )
                                   : const Text("Load More"))
                       ],
                     ),
