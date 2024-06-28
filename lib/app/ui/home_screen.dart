@@ -14,6 +14,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController _searchController = TextEditingController();
   String _searchQuery = "";
+  String _selectedGender = "All";
+  String _selectedStatus = "All";
+  String _selectedSpecies = "All";
+
+  final List<String> _genders = ["All", "Male", "Female", "Genderless", "unknown"];
+  final List<String> _statuses = ["All", "Alive", "Dead", "unknown"];
+  final List<String> _species = ["All", "Human", "Alien", "Humanoid", "unknown"]; // Add more species as needed
 
   @override
   void initState() {
@@ -32,22 +39,35 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   List<Character> _filterCharacters(List<Character> characters) {
-    if (_searchQuery.isEmpty) {
-      return characters;
+    List<Character> filteredCharacters = characters;
+
+    if (_searchQuery.isNotEmpty) {
+      filteredCharacters = filteredCharacters.where((character) =>
+          character.name.toLowerCase().contains(_searchQuery.toLowerCase())).toList();
     }
-    return characters
-        .where((character) =>
-            character.name.toLowerCase().contains(_searchQuery.toLowerCase()))
-        .toList();
+
+    if (_selectedGender != "All") {
+      filteredCharacters = filteredCharacters.where((character) =>
+          character.gender == _selectedGender).toList();
+    }
+
+    if (_selectedStatus != "All") {
+      filteredCharacters = filteredCharacters.where((character) =>
+          character.status == _selectedStatus).toList();
+    }
+
+    if (_selectedSpecies != "All") {
+      filteredCharacters = filteredCharacters.where((character) =>
+          character.species == _selectedSpecies).toList();
+    }
+
+    return filteredCharacters;
   }
 
   @override
   Widget build(BuildContext context) {
-    // Get the screen width
     double screenWidth = MediaQuery.of(context).size.width;
-
-    // Calculate the logo width based on screen width
-    double logoWidth = screenWidth * 0.3; // Adjust this value as needed
+    double logoWidth = screenWidth * 0.3;
 
     return Scaffold(
       appBar: AppBar(
@@ -62,9 +82,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 fit: BoxFit.contain,
               ),
             ),
-            Spacer(), // This will push the search bar to the right
+            Spacer(),
             Container(
-              width: screenWidth * 0.5, // Adjust width as needed
+              width: screenWidth * 0.5,
               margin: const EdgeInsets.symmetric(horizontal: 16),
               child: TextField(
                 controller: _searchController,
@@ -78,14 +98,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0),
                     borderSide: const BorderSide(
-                      color: Colors.grey, // Change the border color
+                      color: Colors.grey,
                       width: 1.0,
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0),
                     borderSide: const BorderSide(
-                      color: Colors.grey, // Change the border color
+                      color: Colors.grey,
                       width: 2.0,
                     ),
                   ),
@@ -110,7 +130,6 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Query(
             builder: (result, {fetchMore, refetch}) {
-              // We have data
               if (result.data != null) {
                 int? nextPage = 1;
                 List<Character> characters =
@@ -169,28 +188,98 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 );
-              }
-              // We got data but it is null
-              else if (result.data == null) {
+              } else if (result.data == null) {
                 return const Text("Data Not Found!");
-              }
-              // We don't have data yet -> LOADING STATE
-              else if (result.isLoading) {
+              } else if (result.isLoading) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
-              }
-              // error state
-              else {
+              } else {
                 return const Center(
                   child: Center(child: Text("Something went wrong")),
                 );
               }
             },
             options: QueryOptions(
-                fetchPolicy: FetchPolicy.cacheAndNetwork,
-                document: getAllCharachters(),
-                variables: const {"page": 1}),
+              fetchPolicy: FetchPolicy.cacheAndNetwork,
+              document: getAllCharachters(),
+              variables: {
+                "page": 1,
+                "gender": _selectedGender != "All" ? _selectedGender : null,
+                "status": _selectedStatus != "All" ? _selectedStatus : null,
+                "species": _selectedSpecies != "All" ? _selectedSpecies : null,
+              },
+            ),
+          ),
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Color.fromARGB(31, 125, 239, 68),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Wrap(
+            alignment: WrapAlignment.spaceAround,
+            spacing: 16,
+            runSpacing: 8,
+            children: [
+              Column(
+                children: [
+                  Text("Gender"),
+                  DropdownButton<String>(
+                    value: _selectedGender,
+                    items: _genders.map((String gender) {
+                      return DropdownMenuItem<String>(
+                        value: gender,
+                        child: Text(gender),
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        _selectedGender = newValue!;
+                      });
+                    },
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  Text("Status"),
+                  DropdownButton<String>(
+                    value: _selectedStatus,
+                    items: _statuses.map((String status) {
+                      return DropdownMenuItem<String>(
+                        value: status,
+                        child: Text(status),
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        _selectedStatus = newValue!;
+                      });
+                    },
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  Text("Species"),
+                  DropdownButton<String>(
+                    value: _selectedSpecies,
+                    items: _species.map((String species) {
+                      return DropdownMenuItem<String>(
+                        value: species,
+                        child: Text(species),
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        _selectedSpecies = newValue!;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
